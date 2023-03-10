@@ -16,6 +16,17 @@ class Game extends React.Component {
       winner: null,
     };
   }
+  handleRefreshClick = () => {
+    this.setState({ cells: Array(4)
+      .fill()
+      .map(() =>
+        Array(4)
+          .fill()
+          .map(() => Array(4).fill(null))
+      ),
+      xIsNext: true,
+      winner: null, });
+  };
 
   handleClick(rowIndex, cellIndex, layerIndex) {
     
@@ -51,6 +62,9 @@ class Game extends React.Component {
               this.handleClick(rowIndex, cellIndex,layerIndex)
             }
           />
+        </div>
+        <div>
+        <button className="refresh-button" onClick={this.handleRefreshClick}>Refresh</button>
         </div>
         
       </div>

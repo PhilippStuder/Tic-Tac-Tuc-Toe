@@ -12,7 +12,6 @@ function Board({ cells, onClick }) {
                 <Cell
                   key={x}
                   value={cells[x][y][z]}
-                  //onClick={() => onClick(x, y, z)}
                   onClick={(layerIndex) => onClick(x, y, layerIndex)}
                   layerIndex={z}
                 />
