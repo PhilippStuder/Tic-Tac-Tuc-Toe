@@ -21,6 +21,7 @@ class Game extends React.Component {
     if (this.state.winner || this.state.cells[rowIndex][cellIndex][0]) {
       return;
     }
+    console.log(this.state.cells);
     const cells = [...this.state.cells];
     const row = [...cells[rowIndex]];
     const cell = [...row[cellIndex]];
@@ -60,7 +61,7 @@ function calculateWinner(cells) {
   // Check horizontal
   for (let x = 0; x < 4; x++) {
     for (let y = 0; y < 4; y++) {
-      for (let z = 0; z < 1; z++) {
+      for (let z = 0; z < 2; z++) {
         if (
           cells[x][y][z] &&
           cells[x][y][z] === cells[x][y][z + 1] &&
@@ -75,7 +76,7 @@ function calculateWinner(cells) {
 
   // Check vertical
   for (let x = 0; x < 4; x++) {
-    for (let y = 0; y < 1; y++) {
+    for (let y = 0; y < 2; y++) {
       for (let z = 0; z < 4; z++) {
         if (
           cells[x][y][z] &&

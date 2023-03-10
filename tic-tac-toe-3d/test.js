@@ -1,33 +1,56 @@
-var cells= Array(4)
-        .fill()
-        .map(() =>
-          Array(4)
-            .fill()
-            .map(() => Array(4).fill("y")));
-
-console.log(cells[2][2][2]);
+var cells= [
+    [  // Row 1
+      [null, 1, null, null], // Column 1 (Layer 1, 2, 3, 4)
+      [null, 1, null, null], // Column 2 (Layer 1, 2, 3, 4)
+      [null, 1, null, null], // Column 3 (Layer 1, 2, 3, 4)
+      [null, 1, null, null], // Column 4 (Layer 1, 2, 3, 4)
+    ],
+    [  // Row 2
+      [null, null, null, null], // Column 1 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 2 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 3 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 4 (Layer 1, 2, 3, 4)
+    ],
+    [  // Row 3
+      [null, null, null, null], // Column 1 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 2 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 3 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 4 (Layer 1, 2, 3, 4)
+    ],
+    [  // Row 4
+      [null, null, null, null], // Column 1 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 2 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 3 (Layer 1, 2, 3, 4)
+      [null, null, null, null], // Column 4 (Layer 1, 2, 3, 4)
+    ]
+  ];
+  
+console.log(null===null);
+console.log(cells);
 
 
 function calculateWinner(cells) {
+    let z=0;
+    let y=0;
+    let x=0;
     // Check horizontal
     for (let x = 0; x < 4; x++) {
+      
       for (let y = 0; y < 4; y++) {
-        for (let z = 0; z < 2; z++) {
+        
           if (
             cells[x][y][z] &&
             cells[x][y][z] === cells[x][y][z + 1] &&
             cells[x][y][z] === cells[x][y][z + 2] &&
             cells[x][y][z] === cells[x][y][z + 3]
           ) {
-            console.log( cells[x][y][z]);
+            return cells[x][y][z];
           }
-        }
       }
     }
   
-    // Check vertical
     for (let x = 0; x < 4; x++) {
-      for (let y = 0; y < 2; y++) {
+      
         for (let z = 0; z < 4; z++) {
           if (
             cells[x][y][z] &&
@@ -38,8 +61,23 @@ function calculateWinner(cells) {
             return cells[x][y][z];
           }
         }
-      }
+    
     }
+  
+    // Check vertical
+      for (let y = 0; y < 2; y++) {
+        
+        for (let z = 0; z < 4; z++) {
+          if (
+            cells[x][y][z] &&
+            cells[x][y][z] === cells[x + 1][y][z] &&
+            cells[x][y][z] === cells[x + 2][y][z] &&
+            cells[x][y][z] === cells[x + 3][y][z]
+          ) {
+            return cells[x][y][z];
+          }
+        }
+      }
   
     // Check diagonal
     for (let x = 0; x < 2; x++) {
@@ -101,5 +139,4 @@ function calculateWinner(cells) {
     
       return 'tie';
     }
-
-    calculateWinner();
+    calculateWinner(cells);
