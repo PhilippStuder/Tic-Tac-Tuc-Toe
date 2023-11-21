@@ -25,8 +25,30 @@ class Game extends React.Component {
           .map(() => Array(4).fill(null))
       ),
       xIsNext: true,
-      winner: null, });
+      winner: null,
+     });
+     this.randomeGame();
   };
+
+  randomeGame() {
+    
+    if (this.state.winner) {
+      return;
+    }
+    const cells = [...this.state.cells];
+    const winner = calculateWinner(cells);
+    this.setState({
+      cells,
+      xIsNext: !this.state.xIsNext,
+      winner,
+    },
+    () => {
+      if (!this.state.winner) {
+        // If it's O's turn, let the bot make a random move immediately
+        this.makeBotMove(cells);
+      }
+    });
+  }
 
   handleClick(rowIndex, cellIndex, layerIndex) {
     
@@ -44,7 +66,33 @@ class Game extends React.Component {
       cells,
       xIsNext: !this.state.xIsNext,
       winner,
+    },
+    () => {
+      if (!this.state.winner && !this.state.xIsNext) {
+        // If it's O's turn, let the bot make a random move immediately
+        this.makeBotMove(cells);
+      }
     });
+  }
+
+  makeBotMove(cells) {
+    // Collect all empty cell positions
+    const emptyPositions = [];
+    for (let x = 0; x < 4; x++) {
+      for (let y = 0; y < 4; y++) {
+        for (let z = 0; z < 4; z++) {
+          if (!cells[x][y][z]) {
+            emptyPositions.push({ x, y, z });
+          }
+        }
+      }
+    }
+
+    // Choose a random empty cell position
+    if (emptyPositions.length > 0) {
+      const randomPosition = emptyPositions[Math.floor(Math.random() * emptyPositions.length)];
+      this.handleClick(randomPosition.x, randomPosition.y, randomPosition.z);
+    }
   }
 
   render() {
@@ -61,6 +109,7 @@ class Game extends React.Component {
             onClick={(rowIndex, cellIndex,layerIndex) =>
               this.handleClick(rowIndex, cellIndex,layerIndex)
             }
+            
           />
         </div>
         <div>

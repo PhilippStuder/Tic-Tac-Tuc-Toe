@@ -1,0 +1,103 @@
+for x in range(BOARD_ROWS):
+            for y in range(BOARD_COLS):
+                if (sum(current_board[x, y, :])) == 3 * (-symbol):
+                    z = next((z for z in range(BOARD_LAYERS) if current_board[x, y, z] == 0), None)
+                    if z is not None:
+                        action = (x, y, z)
+                        return action
+
+        for x in range(BOARD_ROWS):
+            for z in range(BOARD_LAYERS):
+                if (sum(current_board[x, :, z])) == 3 * (-symbol):
+                    y = next((y for y in range(BOARD_COLS) if current_board[x, y, z] == 0), None)
+                    if y is not None:
+                        action = (x, y, z)
+                        return action
+
+        for y in range(BOARD_COLS):
+            for z in range(BOARD_LAYERS):
+                if (sum(current_board[:, y, z])) == 3 * (-symbol):
+                    x = next((x for x in range(BOARD_ROWS) if current_board[x, y, z] == 0), None)
+                    if x is not None:
+                        action = (x, y, z)
+                        return action
+
+        # Check for winning moves in diagonals from cube corner to cube corner (4 of them)
+        for i in range(BOARD_LAYERS):
+            if (sum(current_board[i, i, i] for i in range(BOARD_LAYERS))) == 3 * (-symbol):
+                for j in range(BOARD_LAYERS):
+                    if current_board[j, j, j] == 0:
+                        action = (j, j, j)
+                        return action
+
+            if (sum(current_board[i, i, BOARD_LAYERS - i - 1] for i in range(BOARD_LAYERS))) == 3 * (-symbol):
+                for j in range(BOARD_LAYERS):
+                    if current_board[j, j, BOARD_LAYERS - j - 1] == 0:
+                        action = (j, j, BOARD_LAYERS - j - 1)
+                        return action
+
+            if (sum(current_board[i, BOARD_LAYERS - i - 1, i] for i in range(BOARD_LAYERS))) == 3 * (-symbol):
+                for j in range(BOARD_LAYERS):
+                    if current_board[j, BOARD_LAYERS - j - 1, j] == 0:
+                        action = (j, BOARD_LAYERS - j - 1, j)
+                        return action
+
+            if (sum(current_board[i, BOARD_LAYERS - i - 1, BOARD_LAYERS - i - 1] for i in range(BOARD_LAYERS))) == 3 * (-symbol):
+                for j in range(BOARD_LAYERS):
+                    if current_board[j, BOARD_LAYERS - j - 1, BOARD_LAYERS - j - 1] == 0:
+                        action = (j, BOARD_LAYERS - j - 1, BOARD_LAYERS - j - 1)
+                        return action
+                    
+        for x in range(BOARD_ROWS):
+            summe1=0
+            summe2=0            
+            for notx in range(BOARD_ROWS):
+                summe1+=current_board[x,notx,notx]
+            if (summe1)==3*(-symbol):
+                for notx in range(BOARD_ROWS):
+                    if current_board[x,notx,notx]==0:
+                        action=(x,notx,notx)
+                        return action
+            for notx in range(BOARD_ROWS):
+                summe2+=current_board[x,3-notx,notx]
+            if (summe2)==3*(-symbol):
+                for notx in range(BOARD_ROWS):
+                    if current_board[x,3-notx,notx]==0:
+                        action=(x,3-notx,notx)
+                        return action
+                    
+        for y in range(BOARD_ROWS):
+            summe1=0
+            summe2=0            
+            for noty in range(BOARD_ROWS):
+                summe1+=current_board[noty,y,noty]
+            if (summe1)==3*(-symbol):
+                for noty in range(BOARD_ROWS):
+                    if current_board[noty,y,noty]==0:
+                        action=(noty,y,noty)
+                        return action
+            for noty in range(BOARD_ROWS):
+                summe2+=current_board[3-noty,y,noty]
+            if (summe2)==3*(-symbol):
+                for noty in range(BOARD_ROWS):
+                    if current_board[3-noty,y,noty]==0:
+                        action=(3-noty,y,noty)
+                        return action
+                    
+        for z in range(BOARD_ROWS):
+            summe1=0
+            summe2=0            
+            for notz in range(BOARD_ROWS):
+                summe1+=current_board[notz,notz,z]
+            if (summe1)==3*(-symbol):
+                for noty in range(BOARD_ROWS):
+                    if current_board[notz,notz,z]==0:
+                        action=(notz,notz,z)
+                        return action
+            for notz in range(BOARD_ROWS):
+                summe2+=current_board[3-notz,notz,z]
+            if (summe2)==3*(-symbol):
+                for noty in range(BOARD_ROWS):
+                    if current_board[3-notz,notz,z]==0:
+                        action=(3-notz,notz,z)
+                        return action
